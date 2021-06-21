@@ -11,11 +11,7 @@
 .TEMP 25.0
 .OPTION
 +    ARTIST=2
-//用处:
-用HSPICE .print指令输出的结果去除后面的单位(比如1n-->1e-09 1x-->1e+06,
-形如Matab 科学计数读取格式format long e)便于Matlab直接处理数据.
 +    INGOLD=2
-
 +    PARHIER=LOCAL
 +    PSF=2
 .OPTION PROBE=1
@@ -43,11 +39,11 @@
 .measure tran bldin AVG v(bldlin) FROM = 99ns TO =100ns
 .measure tran czabd AVG v(czabd) FROM = 99ns TO =100ns
 
-
-.INCLUDE "/home/user/design/rules/rohm180/spice/hspice/bu40n1.mdl"
-.INCLUDE "/home/user/design/rules/rohm180/spice/hspice/bu40n3.mdl"
-.LIB "/home/user/design/rules/rohm180/spice/hspice/bu40n1.skw" NT
-.LIB "/home/user/design/rules/rohm180/spice/hspice/bu40n1.skw" PT
+.INCLUDE "/home/user68/design/rules/rohm180/spice/hspice/bu40n1.mdl"
+.INCLUDE "/home/user68/design/rules/rohm180/spice/hspice/bu40n2.mdl"
+.INCLUDE "/home/user68/design/rules/rohm180/spice/hspice/bu40n3.mdl"
+.LIB "/home/user68/design/rules/rohm180/spice/hspice/bu40n1.skw" NT
+.LIB "/home/user68/design/rules/rohm180/spice/hspice/bu40n1.skw" PT
 
 ** Library name: reram
 ** Cell name: CELLD

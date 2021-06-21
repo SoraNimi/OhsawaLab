@@ -24,7 +24,7 @@ layer0_shape = neuron[0].shape
 layer1_shape = neuron[2].shape
 layer2_shape = neuron[4].shape
 layer3_shape = neuron[6].shape
-output_file = open("dnn512retrain30.sp", "w")
+output_file = open("dnn1.sp", "w")
 # output_file = open("dnn_test.sp","w")
 print(neuron[0].shape)
 print(neuron[2].shape)
@@ -89,17 +89,22 @@ for j in range(0, layer1_shape[1]):
 output_file.write('\n')
 for i in range(0, layer1_shape[1]):
     # 并联开始                    begin  end
-    output_file.write("rl1bl%dr l1bl%d l1sa%d0 blinresistor\n" % (i, i, i))
+    output_file.write("rl1bl%dr l1bl%d l1bl%d0 blinresistor\n" % (i, i, i))
     # 添加SAVM
     #                          #IN/BL  DBL   OUT/DL vdd
-    output_file.write("xl1sa%db l1bl%d bldin l1sa%d0 vdd SAVM%d\n" % (i, i, i, 2 * i + 1026))
+    output_file.write("xl1sa%db l1bl%d bldin l1bl%d0 vdd SAVM%d\n" % (i, i, i, 2 * i + 1026))
     #并联结束
-                               #IN/BL  DBL   OUT/DL vdd
-    output_file.write("xl1sa%d l1sa%d0 bldin l1sa%da vdd SAVM%d\n" % (i, i, i, 2 * i + 1027))
+
+    #output_file.write("xl1dl%dinv 0 l1dl%d l1dl%db vdd INV1\n" % (i, i, i))
+    #output_file.write("xl1sa%d l1bl%d bld l1sa%da vdd SAVM%d\n" % (i, i, i, i + 514))
+    #output_file.write("xl1sa%dinvb 0 l1sa%db l1dl%d vdd INV1\n" % (i, i, i))
+    #output_file.write("xl1sa%dinva 0 l1sa%da l1sa%db vdd INV1\n" % (i, i, i))
                                   #G   IN     OUT    V
-    output_file.write("xl1sa%dinva 0 l1sa%da l1sa%db vdd INV1\n" % (i, i, i))
+    output_file.write("xl1dl%dinv 0 l1bl%d0 l1dl%db vdd INV1\n" % (i, i, i))
+                               #IN/BL  DBL   OUT/DL vdd
+    output_file.write("xl1sa%d l1bl%d0 bld l1sa%da vdd SAVM%d\n" % (i, i, i, 2 * i + 1027))
     output_file.write("xl1sa%dinvb 0 l1sa%db l1dl%d vdd INV1\n" % (i, i, i))
-    output_file.write("xl1dl%dinv 0 l1dl%d l1dl%db vdd INV1\n" % (i, i, i))
+    output_file.write("xl1dl%dinva 0 l1sa%da l1sa%db vdd INV1\n" % (i, i, i))
 
 # ==================layer2=================
 output_file.write('\n\n\n')
@@ -114,17 +119,22 @@ for j in range(0, layer2_shape[1]):
 output_file.write('\n')
 for i in range(0, layer2_shape[1]):
     # 并联开始                    begin  end
-    output_file.write("rl2bl%dr l2bl%d l2sa%d0 blinresistor\n" % (i, i, i))
+    output_file.write("rl2bl%dr l2bl%d l2bl%d0 blinresistor\n" % (i, i, i))
     # 添加SAVM
     #                          #IN/BL  DBL   OUT/DL vdd
-    output_file.write("xl2sa%dc l2bl%d bldin l2sa%d0 vdd SAVM%d\n" % (i, i, i, 2 * i + 2050))
+    output_file.write("xl2sa%db l2bl%d bldin l2bl%d0 vdd SAVM%d\n" % (i, i, i, 2 * i + 2050))
     #并联结束
-                               #IN/BL  DBL   OUT/DL vdd
-    output_file.write("xl2sa%d l2sa%d0 bldin l2sa%da0 vdd SAVM%d\n" % (i, i, i, 2 * i + 2051))
+
+    #output_file.write("xl1dl%dinv 0 l1dl%d l1dl%db vdd INV1\n" % (i, i, i))
+    #output_file.write("xl1sa%d l1bl%d bld l1sa%da vdd SAVM%d\n" % (i, i, i, i + 514))
+    #output_file.write("xl1sa%dinvb 0 l1sa%db l1dl%d vdd INV1\n" % (i, i, i))
+    #output_file.write("xl1sa%dinva 0 l1sa%da l1sa%db vdd INV1\n" % (i, i, i))
                                   #G   IN     OUT    V
-    output_file.write("xl2sa%dinva 0 l2sa%da0 l2sa%db vdd INV1\n" % (i, i, i))
+    output_file.write("xl2dl%dinv 0 l2bl%d0 l2dl%db vdd INV1\n" % (i, i, i))
+                               #IN/BL  DBL   OUT/DL vdd
+    output_file.write("xl2sa%d l2bl%d0 bld l2sa%da vdd SAVM%d\n" % (i, i, i, 2 * i + 2051))
     output_file.write("xl2sa%dinvb 0 l2sa%db l2dl%d vdd INV1\n" % (i, i, i))
-    output_file.write("xl2dl%dinv 0 l2dl%d l2dl%db vdd INV1\n" % (i, i, i))
+    output_file.write("xl2dl%dinva 0 l2sa%da l2sa%db vdd INV1\n" % (i, i, i))
 
 # ==================layer3=================
 output_file.write('\n\n\n')
@@ -138,21 +148,33 @@ for j in range(0, layer3_shape[1]):
 
 output_file.write('\n')
 for i in range(0, layer3_shape[1]):
-    output_file.write("rl3bl%dr l3bl%d 0 blresistor\n" % (i, i))
-    output_file.write("xl3dl%dinv 0 l3dl%d l3dl%db vdd INV1\n" % (i, i, i))
-    output_file.write("xl3sa%d l3bl%d bld l3sa%da vdd SAVM%d\n" % (i, i, i, i + 3074))
+    # 并联开始                    begin  end
+    output_file.write("rl3bl%dr l3bl%d l3bl%d0 blinresistor\n" % (i, i, i))
+    # 添加SAVM
+    #                          #IN/BL  DBL   OUT/DL vdd
+    output_file.write("xl3sa%db l3bl%d bldin l3bl%d0 vdd SAVM%d\n" % (i, i, i, 2 * i + 2050))
+    #并联结束
+
+    #output_file.write("xl1dl%dinv 0 l1dl%d l1dl%db vdd INV1\n" % (i, i, i))
+    #output_file.write("xl1sa%d l1bl%d bld l1sa%da vdd SAVM%d\n" % (i, i, i, i + 514))
+    #output_file.write("xl1sa%dinvb 0 l1sa%db l1dl%d vdd INV1\n" % (i, i, i))
+    #output_file.write("xl1sa%dinva 0 l1sa%da l1sa%db vdd INV1\n" % (i, i, i))
+                                  #G   IN     OUT    V
+    output_file.write("xl3dl%dinv 0 l3bl%d0 l3dl%db vdd INV1\n" % (i, i, i))
+                               #IN/BL  DBL   OUT/DL vdd
+    output_file.write("xl3sa%d l3bl%d0 bld l3sa%da vdd SAVM%d\n" % (i, i, i, 2 * i + 3074))
     output_file.write("xl3sa%dinvb 0 l3sa%db l3dl%d vdd INV1\n" % (i, i, i))
-    output_file.write("xl3sa%dinva 0 l3sa%da l3sa%db vdd INV1\n" % (i, i, i))
+    output_file.write("xl3dl%dinva 0 l3sa%da l3sa%db vdd INV1\n" % (i, i, i))
 
 ##==================dummy bl==============
 # dummy bl cells
 output_file.write('\n')
 output_file.write('xbdc0 bld vdd vref vrefb CELLDREF\n')
-
 for i in range(1, bld_len):
     output_file.write("xbdc%d bld vdd vref vrefb CELLD r1=%se3 r0=%se3\n" % (
     i, (100 if i % 2 == 0 else 5.3), (5.3 if i % 2 == 0 else 100)))
 output_file.write("rbldr bld 0 blresistor\n")
+
 
 # for i in range(1,68):
 #   output_file.write("xbdc%d bld vdd vref vrefb CELLD r1=10e3 r0=1e3\n")
