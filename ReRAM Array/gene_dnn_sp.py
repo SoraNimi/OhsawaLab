@@ -152,7 +152,7 @@ for i in range(0, layer3_shape[1]):
     output_file.write("rl3bl%dr l3bl%d l3bl%d0 blinresistor\n" % (i, i, i))
     # 添加SAVM
     #                          #IN/BL  DBL   OUT/DL vdd
-    output_file.write("xl3sa%db l3bl%d bldin l3bl%d0 vdd SAVM%d\n" % (i, i, i, 2 * i + 2050))
+    output_file.write("xl3sa%db l3bl%d bldin l3bl%d0 vdd SAVM%d\n" % (i, i, i, 2 * i + 3073))
     #并联结束
 
     #output_file.write("xl1dl%dinv 0 l1dl%d l1dl%db vdd INV1\n" % (i, i, i))
