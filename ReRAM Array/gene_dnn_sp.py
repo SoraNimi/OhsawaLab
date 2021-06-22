@@ -57,7 +57,6 @@ for i in range(3200):
     output_file.write("m4 net18 net9 g g N L=360e-9 W=2e-6\n")
     output_file.write("r0 net24 out r 15e3\n")
     output_file.write("c0 net24 net18 10e-12\n")
-    output_file.write("m2 net9 in_n net08 net08 P L=360e-9 W=24e-6\n")
     output_file.write(".ends OA%d\n" % (i + 2))
     output_file.write("\n")
 
@@ -76,9 +75,9 @@ for i in range(0, layer0_shape[1]):
     # 在这里添加Operational Amplifier
     #  output_file.write("xl0oa%d 0 in_n in_p out vdd OA%d", i, i, i)
     # in_p电压需要设置
-    output_file.write("xl0oa%d 0 l0bl%d 0.8624V l0oaout%d vdd OA%d", i, i, i + 2)
+    output_file.write("xl0oa%d 0 l0bl%d VOA l0oaout%d vdd OA%d\n"%( i, i, i, i + 2))
     # begin
-    output_file.write("rl0bl%dr l0bl%d l0oaout%d blinresistor\n" % (i, i))
+    output_file.write("rl0bl%dr l0bl%d l0oaout%d blinresistor\n" % (i, i, i))
     #                          #IN/BL  DBL   OUT/DL vdd
     output_file.write("xl0sa%d l0oaout%d bldinoaout l0sa%da vdd SAVM%d\n" % (i, i, i, i + 2))
     output_file.write("xl0sa%dinva 0 l0sa%da l0sa%db vdd INV1\n" % (i, i, i))
@@ -100,9 +99,9 @@ for i in range(0, layer1_shape[1]):
     # 在这里添加Operational Amplifier
     #  output_file.write("xl0oa%d 0 in_n in_p out vdd OA%d", i, i, i)
     # in_p电压需要设置
-    output_file.write("xl1oa%d 0 l1bl%d 0.8624V l1oaout%d vdd OA%d", i, i, i + 514)
+    output_file.write("xl1oa%d 0 l1bl%d VOA l1oaout%d vdd OA%d\n" %( i, i, i, i + 514))
     # begin
-    output_file.write("rl1bl%dr l1bl%d l1oaout%d blinresistor\n" % (i, i))
+    output_file.write("rl1bl%dr l1bl%d l1oaout%d blinresistor\n" % (i,i, i))
 
     output_file.write("xl1dl%dinv 0 l1dl%d l1dl%db vdd INV1\n" % (i, i, i))
     # ?
@@ -125,9 +124,9 @@ for i in range(0, layer2_shape[1]):
     # 在这里添加Operational Amplifier
     #  output_file.write("xl0oa%d 0 in_n in_p out vdd OA%d", i, i, i)
     # in_p电压需要设置
-    output_file.write("xl2oa%d 0 l2bl%d 0.8624V l2oaout%d vdd OA%d", i, i, i + 1026)
+    output_file.write("xl2oa%d 0 l2bl%d VOA l2oaout%d vdd OA%d\n" %( i, i, i, i + 1026))
     # begin
-    output_file.write("rl2bl%dr l2bl%d l2oaout%d blinresistor\n" % (i, i))
+    output_file.write("rl2bl%dr l2bl%d l2oaout%d blinresistor\n" % (i, i, i))
 
     output_file.write("xl2dl%dinv 0 l2dl%d l2dl%db vdd INV1\n" % (i, i, i))
     output_file.write("xl2sa%d l2oaout%d bldoaout l2sa%da vdd SAVM%d\n" % (i, i, i, i + 1026))
@@ -149,9 +148,9 @@ for i in range(0, layer3_shape[1]):
     # 在这里添加Operational Amplifier
     #  output_file.write("xl0oa%d 0 in_n in_p out vdd OA%d", i, i, i)
     # in_p电压需要设置
-    output_file.write("xl3oa%d 0 l3bl%d 0.8624V l3oaout%d vdd OA%d", i, i, i + 1538)
+    output_file.write("xl3oa%d 0 l3bl%d VOA l3oaout%d vdd OA%d\n" % (i, i, i, i + 1538))
     # begin
-    output_file.write("rl3bl%dr l3bl%d l3oaout%d blinresistor\n" % (i, i))
+    output_file.write("rl3bl%dr l3bl%d l3oaout%d blinresistor\n" % (i, i, i))
 
     output_file.write("xl3dl%dinv 0 l3dl%d l3dl%db vdd INV1\n" % (i, i, i))
     output_file.write("xl3sa%d l3oaout%d bldoaout l3sa%da vdd SAVM%d\n" % (i, i, i, i + 1538))
@@ -171,7 +170,7 @@ for i in range(1, bld_len):
 # 在这里依然要添加运算放大器
 #bld现在可以认为是输出的电压线上的一个值
 #  output_file.write("xl0oa%d 0 in_n in_p out vdd OA%d", i, i, i)
-output_file.write("xbdcoa 0 bld 0.8624V bldoaout vdd OA%d", 3000)
+output_file.write("xbdcoa 0 bld VOA bldoaout vdd OA%d\n" %( 3000))
 output_file.write("rbldr bld bldoaout blresistor\n")
 
 # for i in range(1,68):
@@ -186,7 +185,7 @@ for i in range(1, input_len):
         i, (100 if i % 2 == 0 else 5.3), (5.3 if i % 2 == 0 else 100)))
 
 # 这里同样也需要添加运算放大器
-output_file.write("xbdincoaout 0 bld 0.8624V bldinoaout vdd OA%d", 3100)
+output_file.write("xbdincoaout 0 bld VOA bldinoaout vdd OA%d\n" %( 3100))
 output_file.write("rbldinr bldin bldinoaout blinresistor\n")
 
 output_file.write('\n')
