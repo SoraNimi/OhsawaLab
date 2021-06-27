@@ -180,4 +180,4 @@ model.save('batch%d_hidden%d_epoch%d_std%d'%(batch_size,num_unit,epochs,stddev)+
 #layer_outs = functor([X_test, 0.]) #without dropout
 #print(layer_outs)
 weight=model.get_weights()
-np.save('weight_retrain15.npy',weight)
+np.save('weight_retrain15.npy', weight)

@@ -10,11 +10,11 @@ bias1 = np.zeros(shape=(512))
 array=np.random.normal(0, 0.03, 3300)
 print(array)
 import matplotlib.pyplot as plt
-np.save('fluctuation30_1mV.npy',array)
+np.save('fluctuation30_1mV.npy', array)
 plt.hist(array, bins=50, color='steelblue', density=True )
 plt.show()
 output_file = open("bu40n3.mdl", "w")
-header_file = open("bu40n2.mdl","r")
+header_file = open("bu40n2.mdl", "r")
 line = header_file.readline()
 for line in  header_file.readlines()[0:51]:
         output_file.write(line)
