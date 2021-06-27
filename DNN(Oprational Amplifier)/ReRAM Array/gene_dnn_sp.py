@@ -30,7 +30,7 @@ print(neuron[0].shape)
 print(neuron[2].shape)
 print(neuron[4].shape)
 print(neuron[6].shape)
-header_file = open("module_header.sp", "r")
+header_file = open("../../DNN网络对于波动快速下降的研究/ReRAM Array/module_header.sp", "r")
 line = header_file.readline()
 while (not line == ""):
     output_file.write(line)
