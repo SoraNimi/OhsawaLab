@@ -14,15 +14,14 @@ def deal(listStr):
     df = pd.DataFrame(listStr, columns=['L0 Voltage'])
 
     # 保存到本地excel
-    df.to_excel("fluction1.xlsx", index=False)
+    df.to_excel("Input number1.xlsx", index=False)
 
 if __name__ == '__main__':
     s = linecache.getline('dnn11.mt0', 4)
     print(s)
     strAfter = re.sub(' +', ',', s)
     data = strAfter.split(',')
-    print(data)    # 把string类型转换为lsit
-    strAfter = re.sub(' +', ',', s)
-    data = strAfter.split(',')
     print(data)
-    deal(data)
+    datalist = data[1:513]
+    print(datalist)
+    deal(datalist)
